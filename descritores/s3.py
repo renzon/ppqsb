@@ -1,7 +1,7 @@
 import pytest
 
 
-class NumeroPositivo:
+class Quantidade:
     def __init__(self):
         self.nome_do_alvo = '_{}'.format(id(self))
 
@@ -15,8 +15,8 @@ class NumeroPositivo:
 
 
 class ItemPedido:
-    preco = NumeroPositivo()
-    quantidade = NumeroPositivo()
+    preco = Quantidade()
+    quantidade = Quantidade()
 
     def __init__(self, descricao, preco, quantidade):
         self.descricao = descricao

@@ -1,7 +1,7 @@
 import pytest
 
 
-class NumeroPositivo:
+class Quantidade:
     def __init__(self):
         self.nome_do_alvo = None
 
@@ -26,8 +26,8 @@ class ModeloMeta(type):
 
 
 class ItemPedido(metaclass=ModeloMeta):
-    preco = NumeroPositivo()
-    quantidade = NumeroPositivo()
+    preco = Quantidade()
+    quantidade = Quantidade()
 
     def __init__(self, descricao, preco, quantidade):
         self.descricao = descricao

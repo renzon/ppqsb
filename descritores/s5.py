@@ -1,7 +1,7 @@
 import pytest
 
 
-class NumeroPositivo:
+class Quantidade:
     def __init__(self):
         self.nome_do_alvo = None
 
@@ -18,8 +18,8 @@ class NumeroPositivo:
 
 
 class ItemPedido:
-    preco = NumeroPositivo()
-    quantidade = NumeroPositivo()
+    preco = Quantidade()
+    quantidade = Quantidade()
     _new_executed = False
 
     def __new__(cls, *args, **kwargs):

@@ -3,15 +3,15 @@ import pytest
 from descritores.framework import Propriedade, Modelo
 
 
-class NumeroPositivo(Propriedade):
+class Quantidade(Propriedade):
     def validar(self, valor):
         if valor <= 0:
             raise TypeError('Nao pode ter valor negativo')
 
 
 class ItemPedido(Modelo):
-    preco = NumeroPositivo()
-    quantidade = NumeroPositivo()
+    preco = Quantidade()
+    quantidade = Quantidade()
 
     def __init__(self, descricao, preco, quantidade):
         self.descricao = descricao
