@@ -15,19 +15,19 @@ from exercicios.flask.app import rota, rotear, RotaInexistente
 @pytest.fixture(scope='session')
 def usuario():
     @rota('/usuario')
-    def usuario_rota(nome):
+    def usuario_funcao(nome):
         return f'salvando {nome}'
 
-    return usuario_rota
+    return usuario_funcao
 
 
 @pytest.fixture(scope='session')
 def carro():
     @rota('/carro')
-    def carro_rota(nome, ano):
+    def carro_funcao(nome, ano):
         return f'{nome} ano {ano}'
 
-    return carro_rota
+    return carro_funcao
 
 
 def test_execucao_sem_parametro():
