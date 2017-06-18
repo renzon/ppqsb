@@ -12,22 +12,14 @@ import pytest
 from exercicios.flask.app import rota, rotear, RotaInexistente
 
 
-@pytest.fixture(scope='session')
-def usuario():
-    @rota('/usuario')
-    def usuario_funcao(nome):
-        return f'salvando {nome}'
-
-    return usuario_funcao
+@rota('/usuario')
+def usuario(nome):
+    return f'salvando {nome}'
 
 
-@pytest.fixture(scope='session')
+@rota('/carro')
 def carro():
-    @rota('/carro')
-    def carro_funcao(nome, ano):
-        return f'{nome} ano {ano}'
-
-    return carro_funcao
+    return f'{nome} ano {ano}'
 
 
 def test_execucao_sem_parametro():
@@ -41,35 +33,35 @@ def test_execucao_sem_parametro():
     assert home() == rotear('/') == 'home executada'
 
 
-def test_execucao_com_parametro_posicional(usuario):
+def test_execucao_com_parametro_posicional():
     assert usuario('Renzo') == rotear('/usuario', 'Renzo') == 'salvando Renzo'
 
 
-def test_execucao_com_parametro_nomeado(usuario):
+def test_execucao_com_parametro_nomeado():
     assert usuario('Foo') == rotear('/usuario', nome='Foo') == 'salvando Foo'
 
 
-def test_execucao_com_parametros_posicionais(carro):
+def test_execucao_com_parametros_posicionais():
     assert carro('Fusca', 88) == rotear(
         '/carro', 'Fusca', 88) == 'Fusca ano 88'
 
 
-def test_execucao_com_parametros_nomeados(carro):
+def test_execucao_com_parametros_nomeados():
     assert carro('Gol', 2000) == rotear(
         '/carro', ano=2000, nome='Gol') == 'Gol ano 2000'
 
 
-def test_execucao_com_parametro_posicional_e_nomeado(carro):
+def test_execucao_com_parametro_posicional_e_nomeado():
     assert carro('Celta', 99) == rotear(
         '/carro', 'Celta', 99) == 'Celta ano 99'
 
 
-def test_parametros_errados(carro):
+def test_parametros_errados():
     with pytest.raises(TypeError):
         rotear('/carro')
 
 
-def test_rota_inexistente(carro):
+def test_rota_inexistente():
     with pytest.raises(RotaInexistente) as excinfo:
         rotear('/inexistente')
 
