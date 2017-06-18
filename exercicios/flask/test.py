@@ -18,7 +18,7 @@ def usuario(nome):
 
 
 @rota('/carro')
-def carro():
+def carro(nome, ano):
     return f'{nome} ano {ano}'
 
 
