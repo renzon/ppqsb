@@ -1,5 +1,6 @@
+from concurrent.futures import as_completed
+from concurrent.futures.thread import ThreadPoolExecutor
 from itertools import cycle
-from threading import Thread
 from time import strftime, sleep
 
 
@@ -16,6 +17,7 @@ class Pedido:
         log(f'Iniciando preparo de {self}')
         sleep(self.tempo_de_preparo)
         log(f'Finalizando preparo de {self}')
+        return self.nome
 
     def __call__(self):
         return self.preparar()
@@ -26,16 +28,14 @@ class Pedido:
 
 if __name__ == '__main__':
     nomes = cycle(['Camarão', 'Misto Quente'])
-    nomes = (f'{nome} - {i}' for nome, i in zip(nomes, range(1, 3)))
+    nomes = (f'{nome} - {i}' for nome, i in zip(nomes, range(1, 4000)))
     tempos = cycle([10, 3])
     pedidos = [Pedido(nome, tempo) for nome, tempo in zip(nomes, tempos)]
-    threads = [Thread(target=p) for p in pedidos]
-
-    for pedido, thread in zip(pedidos, threads):
-        log(f'Pedido Anotado: {pedido}')
-        thread.start()
-
-    for thread in threads:
-        thread.join()
-
+    with ThreadPoolExecutor(max_workers=1000) as executor:
+        futures = []
+        for p in pedidos:
+            log(f'Anotando {p}')
+            futures.append(executor.submit(p))
+        for future in as_completed(futures):
+            print(future.result())
     log('Encerrando atendimeto')
